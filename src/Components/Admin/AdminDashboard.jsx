@@ -37,7 +37,7 @@ const AdminDashboard = () => {
     fetchProducts();
     fetchOrders();
     fetchUsers();
-  }, []);
+  }, [adminInfo, fetchOrders, fetchProducts, fetchUsers]);
 
   // --- FETCH FUNCTIONS ---
   const fetchProducts = async () => {
