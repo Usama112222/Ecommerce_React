@@ -6,12 +6,10 @@ import './Admin.css';
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState('products');
 
-  // Data from backend
   const [products, setProducts] = useState([]);
   const [orders, setOrders] = useState([]);
   const [users, setUsers] = useState([]);
 
-  // Form state for new product
   const [newProduct, setNewProduct] = useState({
     title: '',
     price: '',
@@ -19,53 +17,55 @@ const AdminDashboard = () => {
     images: [],
   });
 
-  // Get admin token from localStorage
+  // Get admin info
   const adminInfo = JSON.parse(localStorage.getItem('adminInfo'));
-  const config = {
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: adminInfo ? `Bearer ${adminInfo.token}` : '',
-    },
-  };
 
-  // Fetch products, orders, users
+  // Fetch data inside useEffect
   useEffect(() => {
     if (!adminInfo || !adminInfo.token) {
       alert('Please login as admin');
       return;
     }
+
+    // Config inside effect
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${adminInfo.token}`,
+      },
+    };
+
+    const fetchProducts = async () => {
+      try {
+        const { data } = await axios.get('http://localhost:5000/api/products', config);
+        setProducts(data);
+      } catch (err) {
+        console.error('Error fetching products:', err.response?.data?.message || err.message);
+      }
+    };
+
+    const fetchOrders = async () => {
+      try {
+        const { data } = await axios.get('http://localhost:5000/api/orders', config);
+        setOrders(data);
+      } catch (err) {
+        console.error('Error fetching orders:', err.response?.data?.message || err.message);
+      }
+    };
+
+    const fetchUsers = async () => {
+      try {
+        const { data } = await axios.get('http://localhost:5000/api/users', config);
+        setUsers(data);
+      } catch (err) {
+        console.error('Error fetching users:', err.response?.data?.message || err.message);
+      }
+    };
+
     fetchProducts();
     fetchOrders();
     fetchUsers();
-  }, [adminInfo, fetchOrders, fetchProducts, fetchUsers]);
-
-  // --- FETCH FUNCTIONS ---
-  const fetchProducts = async () => {
-    try {
-      const { data } = await axios.get('http://localhost:5000/api/products', config);
-      setProducts(data);
-    } catch (err) {
-      console.error('Error fetching products:', err.response?.data?.message || err.message);
-    }
-  };
-
-  const fetchOrders = async () => {
-    try {
-      const { data } = await axios.get('http://localhost:5000/api/orders', config);
-      setOrders(data);
-    } catch (err) {
-      console.error('Error fetching orders:', err.response?.data?.message || err.message);
-    }
-  };
-
-  const fetchUsers = async () => {
-    try {
-      const { data } = await axios.get('http://localhost:5000/api/users', config);
-      setUsers(data);
-    } catch (err) {
-      console.error('Error fetching users:', err.response?.data?.message || err.message);
-    }
-  };
+  }, [adminInfo]); // only depend on adminInfo
 
   // --- ADD PRODUCT ---
   const handleAddProduct = async (e) => {
@@ -76,6 +76,12 @@ const AdminDashboard = () => {
     }
 
     try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${adminInfo?.token}`,
+        },
+      };
       const { data } = await axios.post(
         'http://localhost:5000/api/products',
         newProduct,
@@ -93,7 +99,14 @@ const AdminDashboard = () => {
   // --- DELETE PRODUCT ---
   const handleDeleteProduct = async (id) => {
     if (!window.confirm('Are you sure you want to delete this product?')) return;
+
     try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${adminInfo?.token}`,
+        },
+      };
       await axios.delete(`http://localhost:5000/api/products/${id}`, config);
       setProducts(products.filter((p) => p._id !== id));
     } catch (err) {
@@ -105,7 +118,7 @@ const AdminDashboard = () => {
   // --- HANDLE IMAGE UPLOAD ---
   const handleImageUpload = (e) => {
     const files = Array.from(e.target.files);
-    const urls = files.map((file) => URL.createObjectURL(file)); // preview URLs
+    const urls = files.map((file) => URL.createObjectURL(file));
     setNewProduct({ ...newProduct, images: urls });
   };
 
@@ -135,49 +148,35 @@ const AdminDashboard = () => {
         </button>
       </div>
 
-      {/* --- PRODUCTS TAB --- */}
+      {/* PRODUCTS */}
       {activeTab === 'products' && (
         <div className="admin-section">
           <h2>Manage Products</h2>
-
           <form onSubmit={handleAddProduct} className="admin-form">
             <input
               type="text"
               placeholder="Product Title"
               value={newProduct.title}
-              onChange={(e) =>
-                setNewProduct({ ...newProduct, title: e.target.value })
-              }
+              onChange={(e) => setNewProduct({ ...newProduct, title: e.target.value })}
               required
             />
             <input
               type="number"
               placeholder="Price"
               value={newProduct.price}
-              onChange={(e) =>
-                setNewProduct({ ...newProduct, price: e.target.value })
-              }
+              onChange={(e) => setNewProduct({ ...newProduct, price: e.target.value })}
               required
             />
             <select
               value={newProduct.category}
-              onChange={(e) =>
-                setNewProduct({ ...newProduct, category: e.target.value })
-              }
+              onChange={(e) => setNewProduct({ ...newProduct, category: e.target.value })}
             >
               <option value="Men">Men</option>
               <option value="Women">Women</option>
               <option value="Kids">Kids</option>
             </select>
-            <input
-              type="file"
-              multiple
-              accept="image/*"
-              onChange={handleImageUpload}
-            />
-            <button type="submit" className="btn-add">
-              Add Product
-            </button>
+            <input type="file" multiple accept="image/*" onChange={handleImageUpload} />
+            <button type="submit" className="btn-add">Add Product</button>
           </form>
 
           <div className="product-cards">
@@ -193,12 +192,7 @@ const AdminDashboard = () => {
                   <p className="price">${p.price}</p>
                   <p className="product-id">ID: {p._id}</p>
                   <p className="category">Category: {p.category}</p>
-                  <button
-                    className="btn-delete"
-                    onClick={() => handleDeleteProduct(p._id)}
-                  >
-                    Delete
-                  </button>
+                  <button className="btn-delete" onClick={() => handleDeleteProduct(p._id)}>Delete</button>
                 </div>
               </div>
             ))}
@@ -206,7 +200,7 @@ const AdminDashboard = () => {
         </div>
       )}
 
-      {/* --- ORDERS TAB --- */}
+      {/* ORDERS */}
       {activeTab === 'orders' && (
         <div className="admin-section">
           <h2>Orders</h2>
@@ -226,11 +220,7 @@ const AdminDashboard = () => {
                   <tr key={o._id}>
                     <td>{o._id}</td>
                     <td>{o.user?.name || 'N/A'}</td>
-                    <td>
-                      {o.orderItems
-                        ?.map((i) => i.product?.title || 'Unknown')
-                        .join(', ') || 'N/A'}
-                    </td>
+                    <td>{o.orderItems?.map((i) => i.product?.title || 'Unknown').join(', ') || 'N/A'}</td>
                     <td>${o.total}</td>
                     <td>{o.status}</td>
                   </tr>
@@ -241,7 +231,7 @@ const AdminDashboard = () => {
         </div>
       )}
 
-      {/* --- USERS TAB --- */}
+      {/* USERS */}
       {activeTab === 'users' && (
         <div className="admin-section">
           <h2>Users</h2>
@@ -271,4 +261,4 @@ const AdminDashboard = () => {
   );
 };
 
-export default AdminDashboard;   
+export default AdminDashboard;
