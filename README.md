@@ -1,72 +1,100 @@
-Title:
-Full-Stack E-commerce Web Application | React, Node.js, Express, MongoDB
-Description:
+# 🛒 Full-Stack E-commerce Web Application | React, Node.js, Express, MongoDB
 
-This is a full-stack e-commerce web application built with React for the frontend, Node.js and Express for the backend, and MongoDB as the database. The application features a modern, responsive design and includes user authentication, product management, shopping cart functionality, and an admin dashboard for managing products, orders, and users.
+## 📌 Project Overview
+This is a **full-stack e-commerce web application** built with:
 
-Key Features
+- **Frontend:** React, React Router, CSS  
+- **Backend:** Node.js, Express  
+- **Database:** MongoDB  
 
-React Frontend: Interactive UI with React Router for multiple pages (Home, Shop, Blog, About, Contact, User Profile).
+The application features a **modern, responsive design** and includes:
 
-Admin Dashboard: Full admin panel to manage products, orders, and users.
+- User authentication and admin login  
+- Product management  
+- Shopping cart functionality  
+- Admin dashboard to manage products, orders, and users  
 
-Node.js & Express Backend: RESTful API endpoints for products, orders, users, and authentication.
+The project demonstrates a complete **MERN stack workflow** with a live deployment.  
 
-MongoDB Database: Stores products, orders, and user information securely.
+---
 
-Authentication: User login/signup and admin login with JWT-based authentication.
+## 🖥️ Screenshots
 
-Shopping Cart: Users can add/remove items and view cart details in a modal.
+### Home Page
+<img src="Ecommerce-React/screenshots/home.png" width="80%" />
 
-Responsive Design: Works seamlessly on desktop, tablet, and mobile.
+### Blog Page
+<img src="Ecommerce-React/screenshots/blog.png" width="80%" />
 
-Deployment: Fully deployed on Vercel
- with live backend hosted on Node/Express server.
+### Product Page (Kind/Category)
+<img src="Ecommerce-React/screenshots/kind.png" width="80%" />
 
-Technologies Used
+### Login Page
+<img src="Ecommerce-React/screenshots/login.png" width="80%" />
 
-Frontend: React, React Router, CSS
+---
 
-Backend: Node.js, Express
+## ✨ Key Features
 
-Database: MongoDB
+### User Features
+- Sign up / Login functionality  
+- Browse products by category  
+- Add/remove products from shopping cart  
+- View cart details in a modal  
+- Responsive UI for desktop, tablet, and mobile  
 
-Authentication: JWT (JSON Web Token)
+### Admin Features
+- Admin login panel  
+- Add, update, or delete products  
+- Manage orders and user information  
+- Full CRUD functionality on products and orders  
 
-Deployment: Vercel (frontend), backend deployed separately
+### Backend & Security
+- RESTful API endpoints with Node.js & Express  
+- MongoDB database for secure data storage  
+- JWT-based authentication for users and admins  
+- Axios for HTTP client requests  
 
-HTTP Client: Axios
+---
 
-Live Demo
+## 🛠️ Technologies Used
 
-Check the live site here: https://ecommerce-psi-tan-85.vercel.app/
+| Layer        | Technology |
+| ------------ | ---------- |
+| Frontend     | React, React Router, CSS |
+| Backend      | Node.js, Express |
+| Database     | MongoDB |
+| Auth         | JWT (JSON Web Token) |
+| HTTP Client  | Axios |
+| Deployment   | Vercel (frontend), Node/Express server (backend) |
 
-Getting Started
+---
 
-Clone the repository:
+## 🚀 Live Demo
+Check the live site here: [E-commerce Demo](https://ecommerce-psi-tan-85.vercel.app/)  
 
-git clone https://github.com/YOUR_USERNAME/YOUR_REPO.git
+---
 
+## 📥 Getting Started
 
-Install frontend dependencies:
-
+### 1️⃣ Clone the Repository
+```bash
+git clone https://github.com/Usama112222/Ecommerce_React
+cd YOUR_REPO
+2️⃣ Install Frontend Dependencies
 cd client
 npm install
-
-
-Install backend dependencies:
-
-cd server
+3️⃣ Install Backend Dependencies
+cd ../server
 npm install
+4️⃣ Configure Environment Variables
+Create a .env file in the server folder:
 
-
-Configure environment variables (.env) for MongoDB connection and JWT secret.
-
-Run the backend server:
-
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret_key
+PORT=5000
+5️⃣ Run the Backend Server
 npm run server
-
-
-Run the frontend locally:
-
+6️⃣ Run the Frontend Locally
+cd ../client
 npm start
