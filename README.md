@@ -21,16 +21,16 @@ The project demonstrates a complete **MERN stack workflow** with a live deployme
 ## 🖥️ Screenshots
 
 ### Home Page
-<img src="Ecommerce-React/screenshots/home.png" width="80%" />
+<img src="screenshots/home.png" width="80%" />
 
 ### Blog Page
-<img src="Ecommerce-React/screenshots/blog.png" width="80%" />
+<img src="screenshots/blog.png" width="80%" />
 
-### Product Page (Kind/Category)
-<img src="Ecommerce-React/screenshots/kind.png" width="80%" />
+### Product Page (Kind)
+<img src="screenshots/kind.png" width="80%" />
 
 ### Login Page
-<img src="Ecommerce-React/screenshots/login.png" width="80%" />
+<img src="screenshots/login.png" width="80%" />
 
 ---
 
