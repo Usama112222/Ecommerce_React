@@ -21,17 +21,16 @@ The project demonstrates a complete **MERN stack workflow** with a live deployme
 ## 🖥️ Screenshots
 
 ### Home Page
-<img src="screenshots/home.png" width="80%" />
+<img src="screenshots/home.PNG" width="80%" />
 
 ### Blog Page
-<img src="screenshots/blog.png" width="80%" />
+<img src="screenshots/blog.PNG" width="80%" />
 
 ### Product Page (Kind)
-<img src="screenshots/kind.png" width="80%" />
+<img src="screenshots/kind.PNG" width="80%" />
 
 ### Login Page
-<img src="screenshots/login.png" width="80%" />
-
+<img src="screenshots/login.PNG" width="80%" />
 ---
 
 ## ✨ Key Features
